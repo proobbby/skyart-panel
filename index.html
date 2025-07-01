@@ -1,0 +1,165 @@
+<!-- SkyArt Panel | by proobbby -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyArt Panel</title>
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --bg-color: #f9fafb;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: #111;
+    }
+    header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .credit {
+      background: #111;
+      color: #0f0;
+      font-size: 2rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .container { padding: 2rem; }
+    .section { margin-bottom: 2rem; }
+    label { display: block; margin-top: 1rem; }
+    input, select, textarea {
+      padding: 0.5rem;
+      width: 100%;
+    }
+    .button {
+      margin-top: 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+    ul { list-style-type: disc; padding-left: 2rem; }
+  </style>
+</head>
+<body>
+  <header><h1 id="panelName">SkyArt Panel</h1></header>
+  <div class="credit">PROOBBBY CREDIT</div>
+  <div class="container">
+    <div class="section" id="adminCheck">
+      <h3>🛡️ Admin Verification</h3>
+      <label>Are you administrator? (y/n)</label>
+      <input type="text" id="admin-status" placeholder="y or n" />
+      <button class="button" onclick="checkAdmin()">Continue</button>
+    </div>
+
+    <div class="section hidden" id="userForm">
+      <h3>👤 User Registration</h3>
+      <label>Email</label><input type="email" id="email" />
+      <label>Username</label><input type="text" id="username" />
+      <label>Password</label><input type="password" id="password" />
+      <label>Port</label><input type="number" id="port" placeholder="eg. 8080" />
+      <button class="button" onclick="registerUser()">Connect</button>
+    </div>
+
+    <div class="section hidden" id="dashboard">
+      <h2>📊 Dashboard</h2>
+      <p>Create unlimited nodes and manage your servers easily.</p>
+
+      <div class="section">
+        <h3>🖥️ Node Management</h3>
+        <label>Node Name</label><input type="text" id="nodeName" placeholder="My Node" />
+        <button class="button" onclick="addNode()">Add Node</button>
+        <ul id="nodeList"></ul>
+      </div>
+
+      <div class="section">
+        <h3>🧩 Server Management</h3>
+        <label>Server Name</label><input type="text" id="serverName" />
+        <label>Plugins</label><textarea id="plugins" placeholder="Plugin1, Plugin2"></textarea>
+        <label>Backup Enabled</label>
+        <select id="backup"><option>yes</option><option>no</option></select>
+        <label>Database Connected</label>
+        <select id="db"><option>yes</option><option>no</option></select>
+        <button class="button" onclick="addServer()">Create Server</button>
+        <ul id="serverList"></ul>
+      </div>
+
+      <div class="section">
+        <h3>⚙️ Admin Settings</h3>
+        <label>Panel Name</label><input type="text" id="panel-name" />
+        <label>Theme Color</label>
+        <select id="theme-color">
+          <option value="#4f46e5">Indigo</option>
+          <option value="#10b981">Green</option>
+          <option value="#ef4444">Red</option>
+          <option value="#f59e0b">Orange</option>
+          <option value="#6366f1">Purple</option>
+        </select>
+        <button class="button" onclick="updateSettings()">Update Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isAdmin = false;
+
+    function checkAdmin() {
+      const status = document.getElementById("admin-status").value.trim().toLowerCase();
+      isAdmin = (status === 'y');
+      document.getElementById("adminCheck").classList.add("hidden");
+      document.getElementById("userForm").classList.remove("hidden");
+    }
+
+    function registerUser() {
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const port = document.getElementById("port").value;
+      if (email && username && password && port) {
+        alert(`Connected to port ${port} as ${isAdmin ? 'Admin' : 'Member'}`);
+        document.getElementById("userForm").classList.add("hidden");
+        document.getElementById("dashboard").classList.remove("hidden");
+      } else alert("Please fill all fields");
+    }
+
+    function updateSettings() {
+      const name = document.getElementById('panel-name').value;
+      const color = document.getElementById('theme-color').value;
+      if (name) document.getElementById('panelName').innerText = name;
+      document.documentElement.style.setProperty('--primary-color', color);
+    }
+
+    function addNode() {
+      const name = document.getElementById("nodeName").value;
+      if (name) {
+        const li = document.createElement("li");
+        li.textContent = name + " - Multi-server supported";
+        document.getElementById("nodeList").appendChild(li);
+        document.getElementById("nodeName").value = "";
+      }
+    }
+
+    function addServer() {
+      const name = document.getElementById("serverName").value;
+      const plugins = document.getElementById("plugins").value;
+      const backup = document.getElementById("backup").value;
+      const db = document.getElementById("db").value;
+      if (name) {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${name}</strong><br>Plugins: ${plugins}<br>Backup: ${backup}<br>Database: ${db}`;
+        document.getElementById("serverList").appendChild(li);
+        document.getElementById("serverName").value = "";
+        document.getElementById("plugins").value = "";
+      }
+    }
+  </script>
+</body>
+</html>
