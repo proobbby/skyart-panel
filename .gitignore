@@ -1,0 +1,25 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment variables
+.env
+
+# Node.js dependencies (agar future mein use karenge)
+node_modules/
+
+# Python cache files (agar koi Python scripts hain)
+__pycache__/
+*.pyc
+
+# Archives
+*.zip
+
+# Editor and IDE config files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
