@@ -1,0 +1,18 @@
+# SkyArt Panel Configuration
+
+panel:
+  name: SkyArt Panel
+  theme_color: "#4f46e5"
+  port: 8080
+
+admin:
+  required: true
+  default_email: admin@example.com
+  default_username: admin
+  default_password: skyart123
+
+features:
+  enable_backup: true
+  enable_plugins: true
+  enable_database: true
+  allow_unlimited_nodes: true
